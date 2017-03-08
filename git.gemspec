@@ -44,6 +44,7 @@ Gem::Specification.new do |s|
     'lib/git/stashes.rb',
     'lib/git/status.rb',
     'lib/git/version.rb',
-    'lib/git/working_directory.rb'
+    'lib/git/working_directory.rb',
+    'scripts/git_ssh.sh'
   ]
 end

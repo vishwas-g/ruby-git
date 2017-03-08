@@ -86,7 +86,8 @@ module Git
       else
         @logger = nil
       end
-     
+
+      @ssh_key = options[:ssh_key] || nil
       @working_directory = options[:working_directory] ? Git::WorkingDirectory.new(options[:working_directory]) : nil
       @repository = options[:repository] ? Git::Repository.new(options[:repository]) : nil 
       @index = options[:index] ? Git::Index.new(options[:index], false) : nil
@@ -140,6 +141,10 @@ module Git
     #  @git.dir.path
     def repo
       @repository
+    end
+
+    def ssh_key
+      @ssh_key
     end
     
     # returns the repository size in bytes

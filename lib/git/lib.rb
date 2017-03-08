@@ -19,10 +19,12 @@ module Git
         @git_dir = base.repo.path
         @git_index_file = base.index.path if base.index
         @git_work_dir = base.dir.path if base.dir
+        @git_ssh_key = base.ssh_key
       elsif base.is_a?(Hash)
         @git_dir = base[:repository]
         @git_index_file = base[:index]
         @git_work_dir = base[:working_directory]
+        @git_ssh_key = base[:ssh_key]
       end
       @logger = logger
     end
@@ -855,7 +857,7 @@ module Git
     # Systen ENV variables involved in the git commands.
     #
     # @return [<String>] the names of the EVN variables involved in the git commands
-    ENV_VARIABLE_NAMES = ['GIT_DIR', 'GIT_WORK_TREE', 'GIT_INDEX_FILE', 'GIT_SSH']
+    ENV_VARIABLE_NAMES = ['GIT_DIR', 'GIT_WORK_TREE', 'GIT_INDEX_FILE', 'GIT_SSH', 'GIT_SSH_KEY']
 
     def command_lines(cmd, opts = [], chdir = true, redirect = '')
       cmd_op = command(cmd, opts, chdir)
@@ -886,7 +888,12 @@ module Git
       ENV['GIT_DIR'] = @git_dir
       ENV['GIT_WORK_TREE'] = @git_work_dir
       ENV['GIT_INDEX_FILE'] = @git_index_file
-      ENV['GIT_SSH'] = Git::Base.config.git_ssh
+      if @git_ssh_key
+        ENV['GIT_SSH_KEY'] = @git_ssh_key
+        ENV['GIT_SSH'] = File.join(File.dirname(__FILE__), '../../scripts/git_ssh.sh')
+      else
+        ENV['GIT_SSH'] = Git::Base.config.git_ssh
+      end
     end
 
     # Runs a block inside an environment with customized ENV variables.

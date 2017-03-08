@@ -136,6 +136,7 @@ module Git
   # options
   #   :repository => '/path/to/alt_git_dir'
   #   :index => '/path/to/alt_index_file'
+  #   :ssh_key => '/path/to/ssh_key'
   def self.init(working_dir = '.', options = {})
     Base.init(working_dir, options)
   end
@@ -159,6 +160,7 @@ module Git
   # options
   #   :repository => '/path/to/alt_git_dir'
   #   :index => '/path/to/alt_index_file'
+  #   :ssh_key => '/path/to/ssh_key'
   def self.open(working_dir, options = {})
     Base.open(working_dir, options)
   end
